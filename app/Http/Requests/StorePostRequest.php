@@ -21,10 +21,22 @@ class StorePostRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd($this->all());
         return [
-            'title' => ['required', 'max:255', 'string'],
+            'title.en' => ['required', 'max:255', 'string'],
+            'title.bn' => ['required', 'max:255', 'string'],
+            'title.ar' => ['required', 'max:255', 'string'],
             'slug' => ['required', 'max:255', 'string', 'unique:posts'],
             'content' => ['required', 'string'],
+            'thumbnail' => ['nullable', 'file', 'mimes:png,jpg']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.en.required' => 'The english title is required field.',
+            'slug.required' => 'The slug field must be not empty'
         ];
     }
 }
