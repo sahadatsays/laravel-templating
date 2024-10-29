@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use PDO;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,7 +25,18 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('password')
             ]);
             User::factory(10)->create();
-            Post::factory(500)->create();
+            Post::factory(500)->make()->map(function ($item) {
+                $item->user_id = User::inRandomOrder()->first()->id;
+                $item->save();
+            });
+
+            Comment::factory(5000)->make()->map(function ($comment) {
+                $comment->user_id = User::inRandomOrder()->first()->id;
+                $comment->post_id = Post::inRandomOrder()->first()->id;
+
+                $comment->save();
+            });
+
         } else {
             User::create([
                 'name' => 'Admin',

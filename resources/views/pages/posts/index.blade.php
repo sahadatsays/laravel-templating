@@ -16,6 +16,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Comments</th>
                     <th>Thumbnail</th>
                     <th>Created At </th>
                     <th>Action</th>
@@ -36,6 +37,9 @@
                             @if($lang == 'ar')
                             {{ $post->title_ar }}
                             @endif
+                        </td>
+                        <td>
+                            <a href="#">{{ $post->comments()->count() }} Comments</a>
                         </td>
                         <td>
                             <img src="{{ $post->thumbnail ?? 'https://placehold.co/200x200@2x.png' }}" alt="Thumbnail" class="img-fluid" width="200px">

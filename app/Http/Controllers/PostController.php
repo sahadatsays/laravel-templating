@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -105,5 +106,15 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+
+    public function comments($post_id)
+    {
+        $comments = Comment::where('post_id', $post_id)->get();
+        return view('pages.comments.index')->with([
+            // 'post' => $post,
+            'comments' => $comments
+        ]);
     }
 }
