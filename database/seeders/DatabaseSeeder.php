@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             User::create([
                 'name' => 'Admin',
                 'email' => 'admin@mail.com',
-                'password' => bcrypt('password')
+                'password' => bcrypt('password'),
+                'is_admin' => 1,
             ]);
             User::factory(10)->create();
             Post::factory(500)->make()->map(function ($item) {
@@ -33,7 +34,6 @@ class DatabaseSeeder extends Seeder
             Comment::factory(5000)->make()->map(function ($comment) {
                 $comment->user_id = User::inRandomOrder()->first()->id;
                 $comment->post_id = Post::inRandomOrder()->first()->id;
-
                 $comment->save();
             });
 
